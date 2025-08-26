@@ -1,0 +1,43 @@
+{
+  "name": "inspiration-list",
+  "compatibility_date": "2025-08-25",
+  "functions": {
+    "directory": "functions",
+    "environment": {
+      "production": {
+        "GEMINI_API_KEY": "your_production_gemini_api_key",
+        "GEMINI_GATEWAY_URL": "https://ai-gateway.eo-edgefunctions7.com/v1beta/models/gemini-2.5-flash:generateContent",
+        "NODE_ENV": "production"
+      },
+      "development": {
+        "GEMINI_API_KEY": "AIzaSyCSApq5WTZRvA5M6daU4k-S-QDfW6OlXkE",
+        "GEMINI_GATEWAY_URL": "https://ai-gateway.eo-edgefunctions7.com/v1beta/models/gemini-2.5-flash:generateContent",
+        "NODE_ENV": "development"
+      }
+    }
+  },
+  "kv": {
+    "namespaces": [
+      {
+        "binding": "INSPIRATIONS_KV",
+        "namespace_id": "your_kv_namespace_id"
+      }
+    ]
+  },
+  "build": {
+    "output": "dist",
+    "public": "public"
+  },
+  "deploy": {
+    "routes": [
+      {
+        "pattern": "/api/*",
+        "function": "api"
+      },
+      {
+        "pattern": "/*",
+        "static": true
+      }
+    ]
+  }
+}

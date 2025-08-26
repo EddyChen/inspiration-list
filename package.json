@@ -1,0 +1,29 @@
+{
+  "name": "inspiration-list",
+  "version": "1.0.0",
+  "description": "Voice-based inspiration recording web application",
+  "main": "src/index.js",
+  "scripts": {
+    "dev": "edgeone dev",
+    "deploy": "edgeone deploy",
+    "deploy:prod": "edgeone deploy --env production",
+    "start": "serve public -p 3000",
+    "build": "echo 'No build step required for static files'",
+    "link": "edgeone link",
+    "preview": "edgeone preview",
+    "function:new": "edgeone function create"
+  },
+  "devDependencies": {
+    "serve": "^14.0.0",
+    "edgeone": "latest"
+  },
+  "keywords": [
+    "voice",
+    "inspiration",
+    "ai",
+    "edge-functions",
+    "gemini"
+  ],
+  "author": "",
+  "license": "MIT"
+}

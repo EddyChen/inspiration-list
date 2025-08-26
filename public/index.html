@@ -1,0 +1,215 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="语音灵感记录应用 - 通过语音记录想法，AI智能分析扩展">
+    <meta name="keywords" content="语音记录,灵感,AI分析,想法管理">
+    <title>Inspiration List - 灵感记录</title>
+    
+    <!-- PWA Meta Tags -->
+    <meta name="theme-color" content="#4f46e5">
+    <meta name="mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="default">
+    <meta name="apple-mobile-web-app-title" content="Inspiration List">
+    
+    <!-- Favicon -->
+    <link rel="icon" type="image/svg+xml" href="/assets/favicon.svg">
+    <link rel="apple-touch-icon" href="/assets/apple-touch-icon.svg">
+    
+    <!-- Stylesheets -->
+    <link rel="stylesheet" href="/css/styles.css">
+    
+    <!-- PWA Manifest -->
+    <link rel="manifest" href="/manifest.json">
+</head>
+<body>
+    <div id="app">
+        <!-- Header -->
+        <header class="header">
+            <div class="container">
+                <h1 class="logo">
+                    <span class="logo-icon">💡</span>
+                    Inspiration List
+                </h1>
+                <nav class="nav">
+                    <button class="nav-btn" data-view="record" aria-label="录制">
+                        <span class="nav-icon">🎙️</span>
+                        <span>录制</span>
+                    </button>
+                    <button class="nav-btn" data-view="list" aria-label="列表">
+                        <span class="nav-icon">📝</span>
+                        <span>列表</span>
+                    </button>
+                </nav>
+            </div>
+        </header>
+
+        <!-- Main Content -->
+        <main class="main" id="main-content">
+            <!-- Recording View -->
+            <section class="view record-view active" id="record-view">
+                <div class="container">
+                    <div class="record-section">
+                        <h2>记录你的灵感</h2>
+                        <p class="subtitle">点击下方按钮开始语音录制，AI将帮助您分析和扩展想法</p>
+                        
+                        <!-- Voice Recording Area -->
+                        <div class="voice-recorder">
+                            <div class="recorder-visual" id="recorder-visual">
+                                <div class="sound-waves">
+                                    <div class="wave"></div>
+                                    <div class="wave"></div>
+                                    <div class="wave"></div>
+                                    <div class="wave"></div>
+                                    <div class="wave"></div>
+                                </div>
+                            </div>
+                            
+                            <button class="record-btn" id="record-btn" aria-label="开始录制">
+                                <span class="record-icon">🎙️</span>
+                                <span class="record-text">点击录制</span>
+                            </button>
+                            
+                            <div class="record-status" id="record-status">
+                                <span class="status-text">准备录制</span>
+                                <span class="record-timer" id="record-timer">00:00</span>
+                            </div>
+                        </div>
+
+                        <!-- Transcription Display -->
+                        <div class="transcription-section" id="transcription-section" style="display: none;">
+                            <h3>识别的文字</h3>
+                            <div class="transcription-text" id="transcription-text"></div>
+                            <div class="transcription-actions">
+                                <button class="btn btn-secondary" id="retry-btn">重新录制</button>
+                                <button class="btn btn-primary" id="save-btn">保存并分析</button>
+                            </div>
+                        </div>
+
+                        <!-- Processing Display -->
+                        <div class="processing-section" id="processing-section" style="display: none;">
+                            <div class="processing-animation">
+                                <div class="spinner"></div>
+                                <p>AI正在分析您的想法...</p>
+                            </div>
+                        </div>
+
+                        <!-- Result Display -->
+                        <div class="result-section" id="result-section" style="display: none;">
+                            <h3>AI分析结果</h3>
+                            <div class="result-content" id="result-content"></div>
+                            <div class="result-actions">
+                                <button class="btn btn-secondary" id="new-record-btn">录制新想法</button>
+                                <button class="btn btn-primary" id="view-list-btn">查看列表</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- List View -->
+            <section class="view list-view" id="list-view">
+                <div class="container">
+                    <div class="list-header">
+                        <h2>我的灵感</h2>
+                        
+                        <!-- Search and Filter -->
+                        <div class="list-controls">
+                            <div class="search-box">
+                                <input type="text" id="search-input" placeholder="搜索灵感..." aria-label="搜索">
+                                <button class="search-btn" id="search-btn" aria-label="搜索">🔍</button>
+                            </div>
+                            
+                            <select class="filter-select" id="category-filter" aria-label="分类筛选">
+                                <option value="all">所有分类</option>
+                                <option value="技术创新">技术创新</option>
+                                <option value="生活想法">生活想法</option>
+                                <option value="工作改进">工作改进</option>
+                                <option value="创意设计">创意设计</option>
+                                <option value="其他">其他</option>
+                            </select>
+                        </div>
+                    </div>
+
+                    <!-- Inspiration List -->
+                    <div class="inspiration-list" id="inspiration-list">
+                        <!-- Dynamic content will be loaded here -->
+                    </div>
+
+                    <!-- Loading State -->
+                    <div class="loading-state" id="list-loading" style="display: none;">
+                        <div class="spinner"></div>
+                        <p>加载中...</p>
+                    </div>
+
+                    <!-- Empty State -->
+                    <div class="empty-state" id="empty-state" style="display: none;">
+                        <div class="empty-icon">💭</div>
+                        <h3>还没有记录任何灵感</h3>
+                        <p>点击录制按钮开始记录您的第一个想法吧！</p>
+                        <button class="btn btn-primary" data-view="record">开始录制</button>
+                    </div>
+
+                    <!-- Pagination -->
+                    <div class="pagination" id="pagination" style="display: none;">
+                        <button class="pagination-btn" id="prev-page" disabled>上一页</button>
+                        <span class="pagination-info" id="pagination-info">第 1 页</span>
+                        <button class="pagination-btn" id="next-page">下一页</button>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Detail Modal -->
+            <div class="modal" id="detail-modal" style="display: none;">
+                <div class="modal-overlay" id="modal-overlay"></div>
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h3>灵感详情</h3>
+                        <button class="modal-close" id="modal-close" aria-label="关闭">×</button>
+                    </div>
+                    <div class="modal-body" id="modal-body">
+                        <!-- Dynamic content will be loaded here -->
+                    </div>
+                    <div class="modal-footer">
+                        <button class="btn btn-danger" id="delete-btn">删除</button>
+                        <button class="btn btn-secondary" id="modal-close-btn">关闭</button>
+                    </div>
+                </div>
+            </div>
+        </main>
+
+        <!-- Toast Notifications -->
+        <div class="toast-container" id="toast-container"></div>
+    </div>
+
+    <!-- Error Boundary -->
+    <div class="error-boundary" id="error-boundary" style="display: none;">
+        <div class="error-content">
+            <h2>😔 出现了一些问题</h2>
+            <p id="error-message">应用遇到了意外错误，请刷新页面重试。</p>
+            <button class="btn btn-primary" onclick="location.reload()">刷新页面</button>
+        </div>
+    </div>
+
+    <!-- Scripts -->
+    <script src="/js/utils.js"></script>
+    <script src="/js/voice-recorder.js"></script>
+    <script src="/js/speech-recognition.js"></script>
+    <script src="/js/api-client.js"></script>
+    <script src="/js/ui-components.js"></script>
+    <script src="/js/app.js"></script>
+
+    <!-- Service Worker Registration -->
+    <script>
+        if ('serviceWorker' in navigator) {
+            window.addEventListener('load', () => {
+                navigator.serviceWorker.register('/sw.js')
+                    .then(registration => console.log('SW registered'))
+                    .catch(error => console.log('SW registration failed'));
+            });
+        }
+    </script>
+</body>
+</html>
