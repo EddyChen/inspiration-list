@@ -1,44 +1,67 @@
-# Inspiration List - 语音灵感记录应用
+# 🎙️ Inspiration List - 语音灵感记录应用
 
-A voice-based inspiration recording web application built on Tencent EdgeOne platform with AI-powered content analysis.
+基于 **EdgeOne Pages** 的智能语音灵感记录应用，支持实时语音转文字、AI 内容分析和数据持久化。
 
-## ✨ Features
+## ✨ 功能特性
 
-- 🎙️ **Voice Recording** - Real-time audio recording with visual feedback
-- 🗣️ **Speech Recognition** - Automatic speech-to-text conversion
-- 🤖 **AI Enhancement** - Content analysis and suggestions using Gemini AI
-- 💾 **Cloud Storage** - Persistent storage with EdgeOne KV
-- 🔍 **Smart Search** - Search and filter your inspirations
-- 📱 **PWA Ready** - Installable with offline support
-- 🎨 **Responsive Design** - Works on desktop and mobile
+- 🎙️ **实时语音录制** - 支持高质量音频录制和可视化
+- 🗣️ **智能语音识别** - 使用 Web Speech API 进行实时转文字
+- 🤖 **AI 内容增强** - 集成 Gemini API 进行智能分析和分类
+- 💾 **数据持久化** - 使用 EdgeOne KV 存储确保数据安全
+- 📱 **PWA 支持** - 支持离线使用和手机安装
+- 🌐 **响应式设计** - 完美适配桌面和移动设备
 
-## 🚀 Quick Start
+## 🏗️ 技术架构
 
-### Development
+- **前端**: 原生 JavaScript + 模块化设计
+- **后端**: EdgeOne Pages Functions
+- **存储**: EdgeOne KV 数据库
+- **AI**: Gemini API + 智能回退机制
+- **部署**: EdgeOne Pages 平台
 
-1. **Install dependencies:**
-   ```bash
-   npm install
-   ```
+## 🚀 快速开始
 
-2. **Start backend (Edge Functions):**
-   ```bash
-   npm run dev
-   ```
-   Backend API will be available at `http://localhost:8787`
+### 环境要求
 
-3. **Start frontend (in another terminal):**
-   ```bash
-   npm start
-   ```
-   Frontend will be available at `http://localhost:3000`
+- Node.js 16+
+- EdgeOne CLI
+- 现代浏览器（支持 WebRTC）
 
-4. **Open your browser:**
-   Navigate to `http://localhost:3000` to use the application
+### 安装和运行
 
-### Production Deployment
+```bash
+# 1. 克隆项目
+git clone git@github.com:EddyChen/inspiration-list.git
+cd inspiration-list
 
-See [DEPLOYMENT.md](./DEPLOYMENT.md) for detailed deployment instructions.
+# 2. 安装依赖
+npm install
+
+# 3. 安装 EdgeOne CLI（如果没有）
+npm install -g edgeone
+
+# 4. 启动本地开发
+npm run dev
+```
+
+访问 `http://localhost:8788` 开始使用应用。
+
+### 部署到 EdgeOne Pages
+
+```bash
+# 1. 关联项目
+npm run link
+
+# 2. 配置环境变量
+edgeone env set GEMINI_API_KEY "your_api_key"
+
+# 3. 创建 KV 存储
+edgeone kv create inspirations-kv
+edgeone kv bind INSPIRATIONS_KV inspirations-kv
+
+# 4. 部署
+npm run deploy
+```
 
 ## 🏗️ Architecture
 
